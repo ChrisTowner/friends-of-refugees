@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 600" role="img" aria-label="Placeholder headshot">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7C9CC9"/>
+      <stop offset="1" stop-color="#4A6FA5"/>
+    </linearGradient>
+  </defs>
+  <rect width="520" height="600" fill="url(#g)"/>
+  <circle cx="260" cy="230" r="88" fill="#FAF7F2" opacity="0.9"/>
+  <path d="M100 600 C 100 450, 420 450, 420 600 Z" fill="#FAF7F2" opacity="0.9"/>
+  <text x="50%" y="92%" text-anchor="middle" fill="#FAF7F2"
+        font-family="Georgia, serif" font-size="22" font-style="italic" opacity="0.85">
+    Placeholder headshot
+  </text>
+</svg>

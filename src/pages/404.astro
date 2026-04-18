@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found — Teri Towner">
+  <section class="notfound">
+    <div class="container-narrow center">
+      <span class="eyebrow">404</span>
+      <h1>We couldn't find that page</h1>
+      <p>It may have moved, or the link might be out of date. Try one of these instead:</p>
+      <div class="actions">
+        <a href="/" class="btn btn-primary">Home</a>
+        <a href="/platform/" class="btn btn-outline">Platform</a>
+        <a href="/get-involved/" class="btn btn-outline">Get Involved</a>
+        <a href="/contact/" class="btn btn-ghost">Contact</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { padding: var(--space-2xl) 0; }
+  .center { text-align: center; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: var(--space-md); }
+</style>

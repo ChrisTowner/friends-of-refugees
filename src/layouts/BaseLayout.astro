@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  pageType?: string;
+}
+
+const {
+  title = `${site.candidateName} — Coquitlam City Council 2026`,
+  description = `Re-elect ${site.candidateName} for Coquitlam City Council. ${site.tagline}`,
+  image = '/images/og-image.jpg',
+  pageType = 'website',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://teritowner.ca').toString();
+const c = site.colors;
+const gaId = site.googleAnalyticsId;
+const showGA = gaId && !gaId.includes('PLACEHOLDER');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content={pageType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Local SEO -->
+    <meta name="geo.region" content="CA-BC" />
+    <meta name="geo.placename" content="Coquitlam" />
+    <meta name="author" content={site.candidateName} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts (self-hostable swap later; Google Fonts with display=swap for now) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": site.candidateName,
+      "jobTitle": "Coquitlam City Councillor",
+      "url": "https://teritowner.ca",
+      "sameAs": [site.socials.facebook, site.socials.instagram, site.socials.cityProfile].filter(Boolean)
+    })}></script>
+
+    <!-- Inline color vars from site.json -->
+    <style set:html={`:root {
+      --color-primary: ${c.primary};
+      --color-primary-dark: ${c.primaryDark};
+      --color-accent: ${c.accent};
+      --color-accent-dark: ${c.accentDark};
+      --color-cream: ${c.cream};
+      --color-text: ${c.text};
+      --color-muted: ${c.muted};
+    }`}></style>
+
+    {showGA && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${gaId}');
+        `} />
+      </>
+    )}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Netlify Identity: handles one-time invite / password-recovery links that land on any page -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function (user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function () {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+
+    <!-- Google Translate widget (free, no API key needed) -->
+    <div id="google_translate_element" style="display:none"></div>
+    <script is:inline>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: 'en', includedLanguages: 'en,zh-CN,zh-TW,ko,fa,pa,es,fr,tl,vi', autoDisplay: false },
+          'google_translate_element'
+        );
+      }
+    </script>
+    <script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+  </body>
+</html>

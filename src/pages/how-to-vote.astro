@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+<BaseLayout title="How to Vote — Teri Towner" description="Everything you need to know to vote in Coquitlam's 2026 municipal election.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">How to Vote</span>
+      <h1>Your voice, your city</h1>
+      <p class="lead">
+        The 2026 Coquitlam general local election is <strong>{site.electionDateLabel}</strong>.
+        Here's everything you need to know.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-narrow prose">
+      <h2>Key dates</h2>
+      <ul>
+        <li><strong>General voting day:</strong> {site.electionDateLabel}</li>
+        <li><strong>Advance voting:</strong> PLACEHOLDER — the City of Coquitlam publishes advance voting dates and locations closer to the election.</li>
+        <li><strong>Mail ballot deadline:</strong> PLACEHOLDER — confirmed by City of Coquitlam.</li>
+      </ul>
+
+      <h2>Who can vote?</h2>
+      <p>You can vote in Coquitlam's municipal election if you are:</p>
+      <ul>
+        <li>18 or older on general voting day</li>
+        <li>A Canadian citizen</li>
+        <li>A resident of BC for at least 6 months before voting day</li>
+        <li>A resident of Coquitlam OR a registered non-resident property owner in Coquitlam</li>
+        <li>Not disqualified by the <em>Local Government Act</em> or any other law</li>
+      </ul>
+
+      <h2>What ID to bring</h2>
+      <p>
+        Bring <strong>two pieces of ID</strong>, at least one with your signature. Examples:
+        driver's licence, BC Services Card, BC ID, Canadian passport, credit/debit card, utility bill with address.
+      </p>
+
+      <h2>Where to vote</h2>
+      <p>
+        Voting locations are published by the City of Coquitlam. You can find the list at
+        <a href="https://www.coquitlam.ca/" rel="noopener" target="_blank">coquitlam.ca</a>
+        closer to the election.
+      </p>
+
+      <h2>Mail-in ballots</h2>
+      <p>
+        If you can't vote in person, mail-in ballots are available. Watch coquitlam.ca for the
+        application deadline and process.
+      </p>
+
+      <h2>Accessibility</h2>
+      <p>
+        All official voting places are wheelchair accessible. If you need assistance, translation support,
+        or any accommodation, please contact the City of Coquitlam Elections Office.
+      </p>
+
+      <blockquote>
+        <strong>Important:</strong> This page summarizes voting information for convenience.
+        For the official, authoritative details please visit
+        <a href="https://www.coquitlam.ca/" rel="noopener" target="_blank">coquitlam.ca</a>
+        or contact Elections BC at <a href="https://elections.bc.ca/" rel="noopener" target="_blank">elections.bc.ca</a>.
+      </blockquote>
+
+      <p>
+        <a href="/get-involved/" class="btn btn-primary">Get involved</a>
+        &nbsp;
+        <a href="/platform/" class="btn btn-outline">See Teri's platform</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-primary) 10%, var(--color-cream));
+  }
+  .prose ul { margin-bottom: 1.25rem; }
+</style>

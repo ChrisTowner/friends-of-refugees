@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  icon?: string;
+  href?: string;
+}
+const { title, summary, icon = 'leaf', href } = Astro.props;
+const icons: Record<string, string> = {
+  leaf: '🌿',
+  people: '🤝',
+  home: '🏡',
+  bus: '🚌',
+  heart: '❤️',
+  tree: '🌳',
+};
+const glyph = icons[icon] ?? '✦';
+---
+<article class="pillar card">
+  <div class="pillar-icon" aria-hidden="true">{glyph}</div>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  {href && <a href={href} class="pillar-link">Read more →</a>}
+</article>
+
+<style>
+  .pillar { display: flex; flex-direction: column; gap: 0.5rem; }
+  .pillar-icon {
+    font-size: 2rem;
+    line-height: 1;
+    width: 56px; height: 56px;
+    display: grid; place-items: center;
+    background: color-mix(in srgb, var(--color-accent) 18%, white);
+    border-radius: 14px;
+    margin-bottom: 0.5rem;
+  }
+  .pillar h3 { margin: 0; }
+  .pillar p { color: var(--color-muted); margin: 0; }
+  .pillar-link {
+    margin-top: auto;
+    font-weight: 600;
+    text-decoration: none;
+    padding-top: 0.75rem;
+  }
+</style>

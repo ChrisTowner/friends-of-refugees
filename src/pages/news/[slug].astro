@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const dateLabel = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(post.data.date);
+---
+<BaseLayout title={`${post.data.title} — Teri Towner`} description={post.data.excerpt} pageType="article">
+  <article class="post container-narrow">
+    <p class="back"><a href="/news/">← Back to news</a></p>
+    <time datetime={post.data.date.toISOString()}>{dateLabel}</time>
+    <h1>{post.data.title}</h1>
+    {post.data.image && (
+      <img src={post.data.image} alt="" class="hero-img" width="900" height="500" />
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding: var(--space-lg) var(--space-md);
+  }
+  .post time {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+  .post h1 { margin: 0.25rem 0 var(--space-md); }
+  .hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-md);
+  }
+  .back { margin-bottom: var(--space-md); }
+  .back a { color: var(--color-muted); font-size: 0.9rem; text-decoration: none; }
+  .back a:hover { color: var(--color-primary-dark); }
+</style>

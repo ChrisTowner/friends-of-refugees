@@ -1,0 +1,87 @@
+---
+import site from '../data/site.json';
+---
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">Re-elect in 2026</span>
+      <h1 class="hero-name">{site.candidateName}</h1>
+      <p class="hero-tagline">{site.tagline}</p>
+      <p class="lead">{site.subTagline}</p>
+      <div class="hero-ctas">
+        <a href="/get-involved/#donate" class="btn btn-primary">Donate</a>
+        <a href="/get-involved/#volunteer" class="btn btn-accent">Volunteer</a>
+        <a href="/get-involved/#lawn-sign" class="btn btn-outline">Request a Lawn Sign</a>
+        <a href="/how-to-vote/" class="btn btn-ghost">How to Vote</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <!--
+        REPLACE with a warm, smiling headshot of Teri (ideally outdoors in Coquitlam).
+        Recommended: 1200×1400px, JPG or WebP, < 300KB.
+        Save to /public/images/teri-headshot.jpg then update src below.
+      -->
+      <img
+        src="/images/teri-headshot.jpg"
+        alt={`Headshot of ${site.candidateName}`}
+        width="520"
+        height="600"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    background:
+      radial-gradient(circle at 85% 10%, rgba(124, 156, 201, 0.18), transparent 60%),
+      radial-gradient(circle at 10% 90%, rgba(46, 125, 50, 0.10), transparent 55%),
+      var(--color-cream);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .hero h1.hero-name {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--color-primary-dark);
+    margin: 0.4rem 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-tagline {
+    font-family: var(--font-heading);
+    font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+    line-height: 1.25;
+    color: var(--color-text);
+    margin: 0 0 var(--space-sm);
+    max-width: 30ch;
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--color-muted);
+    max-width: 36ch;
+  }
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: var(--space-md);
+  }
+  .hero-image img {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    height: auto;
+    background: var(--color-accent);
+  }
+  @media (max-width: 880px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-image { order: -1; max-width: 340px; margin: 0 auto; }
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+import site from '../data/site.json';
+const url = site.googleFormUrls.newsletter;
+const isPlaceholder = !url || url.includes('PLACEHOLDER');
+---
+<section class="newsletter">
+  <div class="container-narrow newsletter-inner">
+    <div>
+      <span class="eyebrow">Stay in touch</span>
+      <h2>Sign up for campaign updates</h2>
+      <p>Get occasional emails about events in your neighbourhood, campaign news, and how to vote.</p>
+    </div>
+
+    {isPlaceholder ? (
+      <div class="placeholder-box">
+        <p><strong>Newsletter signup form goes here.</strong></p>
+        <p class="small">
+          Paste the Google Form embed URL into <code>src/data/site.json</code> → <code>googleFormUrls.newsletter</code>.
+          See <code>SETUP.md</code> for step-by-step instructions.
+        </p>
+      </div>
+    ) : (
+      <iframe
+        src={url}
+        title="Newsletter signup form"
+        width="100%"
+        height="420"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        loading="lazy">Loading…</iframe>
+    )}
+  </div>
+</section>
+
+<style>
+  .newsletter {
+    background: color-mix(in srgb, var(--color-accent) 20%, var(--color-cream));
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .newsletter-inner { display: flex; flex-direction: column; gap: 1rem; }
+  .newsletter h2 { margin: 0.25rem 0; }
+  .newsletter p { color: var(--color-muted); margin: 0; }
+  .placeholder-box {
+    background: var(--color-white);
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border: 1.5px dashed var(--color-accent-dark);
+    margin-top: 0.75rem;
+  }
+  .placeholder-box p { margin: 0.25rem 0; }
+  .placeholder-box .small { font-size: 0.85rem; color: var(--color-muted); }
+  iframe { max-width: 100%; background: var(--color-white); border-radius: 10px; margin-top: 1rem; }
+</style>

@@ -1,0 +1,117 @@
+---
+import site from '../data/site.json';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">{site.candidateName}</p>
+        <p class="footer-sub">Coquitlam City Council — 2026</p>
+        <p class="footer-sub">Election day: {site.electionDateLabel}</p>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/about/">About Teri</a></li>
+          <li><a href="/platform/">Platform</a></li>
+          <li><a href="/news/">News &amp; Events</a></li>
+          <li><a href="/endorsements/">Endorsements</a></li>
+          <li><a href="/press/">Press &amp; Media</a></li>
+          <li><a href="/how-to-vote/">How to Vote</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Get Involved</h4>
+        <ul>
+          <li><a href="/get-involved/#donate">Donate</a></li>
+          <li><a href="/get-involved/#volunteer">Volunteer</a></li>
+          <li><a href="/get-involved/#lawn-sign">Request a Lawn Sign</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          {site.socials.facebook && <li><a href={site.socials.facebook} rel="noopener" target="_blank">Facebook</a></li>}
+          {site.socials.instagram && <li><a href={site.socials.instagram} rel="noopener" target="_blank">Instagram</a></li>}
+          {site.socials.cityProfile && <li><a href={site.socials.cityProfile} rel="noopener" target="_blank">City of Coquitlam profile</a></li>}
+          {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+        </ul>
+      </div>
+    </div>
+
+    <div class="legal">
+      <p class="auth-notice">{site.authorizationNotice}</p>
+      <p class="fineprint">
+        &copy; {year} {site.candidateName} Campaign. All rights reserved.
+        &nbsp;·&nbsp; <a href="/privacy/">Privacy</a>
+        &nbsp;·&nbsp; <a href="/contact/">Contact</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary-dark);
+    color: #EDEAE2;
+    padding: var(--space-xl) 0 var(--space-md);
+    margin-top: var(--space-2xl);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: var(--space-lg);
+  }
+  .footer-grid h4 {
+    color: var(--color-white);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+  .footer-grid ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 0.35rem;
+  }
+  .footer-grid a {
+    color: #EDEAE2;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .footer-grid a:hover { color: var(--color-white); text-decoration: underline; }
+  .footer-brand {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-white);
+    margin: 0;
+  }
+  .footer-sub {
+    font-size: 0.9rem;
+    color: #C9C5BA;
+    margin: 0.15rem 0 0;
+  }
+  .legal {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.85rem;
+    color: #C9C5BA;
+  }
+  .auth-notice {
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+  .fineprint a { color: #EDEAE2; }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>

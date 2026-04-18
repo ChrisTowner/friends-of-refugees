@@ -1,0 +1,40 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  height?: number;
+  setupHint: string;
+}
+const { url, title, height = 900, setupHint } = Astro.props;
+const isPlaceholder = !url || url.includes('PLACEHOLDER');
+---
+{isPlaceholder ? (
+  <div class="placeholder-box" role="note">
+    <p><strong>Form goes here: {title}</strong></p>
+    <p class="small">{setupHint}</p>
+  </div>
+) : (
+  <iframe
+    src={url}
+    title={title}
+    width="100%"
+    height={height}
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    loading="lazy"
+  >Loading form…</iframe>
+)}
+
+<style>
+  .placeholder-box {
+    background: var(--color-white);
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border: 1.5px dashed var(--color-accent-dark);
+    margin: 1rem 0;
+  }
+  .placeholder-box p { margin: 0.35rem 0; }
+  .placeholder-box .small { font-size: 0.88rem; color: var(--color-muted); }
+  iframe { max-width: 100%; background: var(--color-white); border-radius: 12px; }
+</style>

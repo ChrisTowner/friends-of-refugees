@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormEmbed from '../components/FormEmbed.astro';
+import site from '../data/site.json';
+---
+<BaseLayout title="Contact — Teri Towner" description="Reach out to the Teri Towner campaign with questions, ideas, or media inquiries.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">Contact</span>
+      <h1>Let's talk</h1>
+      <p class="lead">
+        Questions, ideas, concerns, a good local story to share — whatever it is, we'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Ways to reach us</h3>
+          <ul>
+            {site.email && <li><strong>Email:</strong> <a href={`mailto:${site.email}`}>{site.email}</a></li>}
+            {site.phone && <li><strong>Phone:</strong> <a href={`tel:${site.phone}`}>{site.phone}</a></li>}
+            {site.socials.facebook && <li><strong>Facebook:</strong> <a href={site.socials.facebook} rel="noopener" target="_blank">TeriTownerCoquitlam</a></li>}
+            {site.socials.instagram && <li><strong>Instagram:</strong> <a href={site.socials.instagram} rel="noopener" target="_blank">@teritownercllr</a></li>}
+          </ul>
+
+          <h3>Mailing address</h3>
+          <p>{site.mailingAddress}</p>
+
+          <h3>Media inquiries</h3>
+          <p>Please use the contact form and note "Media" in the subject line. We'll respond as soon as possible.</p>
+        </div>
+
+        <div class="contact-form">
+          <h3>Send a message</h3>
+          <FormEmbed
+            url={site.googleFormUrls.contact}
+            title="Contact form"
+            height={900}
+            setupHint="Create a Google Form titled 'Contact' (with fields: name, email, subject, message). Click Send → Embed (< >) → copy the src URL → paste into src/data/site.json → googleFormUrls.contact."
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-primary) 8%, var(--color-cream));
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+  .contact-info h3 { margin-top: var(--space-md); }
+  .contact-info h3:first-child { margin-top: 0; }
+  .contact-info ul { list-style: none; padding: 0; margin: 0; }
+  .contact-info ul li { padding: 0.35rem 0; }
+  @media (max-width: 880px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

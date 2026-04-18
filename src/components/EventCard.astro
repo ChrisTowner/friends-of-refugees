@@ -1,0 +1,54 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  endDate?: Date;
+  location?: string;
+  link?: string;
+  body?: string;
+}
+const { title, date, endDate, location, link, body } = Astro.props;
+const dateFmt = new Intl.DateTimeFormat('en-CA', {
+  weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
+});
+const timeFmt = new Intl.DateTimeFormat('en-CA', {
+  hour: 'numeric', minute: '2-digit',
+});
+---
+<article class="event card">
+  <div class="event-date" aria-hidden="true">
+    <span class="month">{new Intl.DateTimeFormat('en-CA', { month: 'short' }).format(date).toUpperCase()}</span>
+    <span class="day">{date.getDate()}</span>
+  </div>
+  <div class="event-body">
+    <h3>{title}</h3>
+    <p class="meta">
+      <span>{dateFmt.format(date)}</span>
+      <span>· {timeFmt.format(date)}{endDate ? `–${timeFmt.format(endDate)}` : ''}</span>
+      {location && <span>· {location}</span>}
+    </p>
+    {body && <p>{body}</p>}
+    {link && <a href={link} rel="noopener" target="_blank">More info →</a>}
+  </div>
+</article>
+
+<style>
+  .event {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .event-date {
+    background: color-mix(in srgb, var(--color-primary) 12%, white);
+    border-radius: 12px;
+    text-align: center;
+    padding: 0.5rem 0;
+    color: var(--color-primary-dark);
+  }
+  .event-date .month { display: block; font-size: 0.75rem; letter-spacing: 0.12em; font-weight: 700; }
+  .event-date .day { display: block; font-family: var(--font-heading); font-size: 2rem; line-height: 1; }
+  .event-body h3 { margin: 0 0 0.25rem; }
+  .event-body .meta { color: var(--color-muted); font-size: 0.9rem; margin: 0 0 0.5rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .event-body p { margin: 0.25rem 0; }
+</style>

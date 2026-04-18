@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PillarCard from '../components/PillarCard.astro';
+import PostCard from '../components/PostCard.astro';
+import EndorsementCard from '../components/EndorsementCard.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import site from '../data/site.json';
+import { getCollection } from 'astro:content';
+
+const pillars = (await getCollection('pillars')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const endorsements = (await getCollection('endorsements'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+---
+<BaseLayout>
+  <Hero />
+
+  <!-- Short intro / "Why I'm running" -->
+  <section class="intro">
+    <div class="container-narrow">
+      <span class="eyebrow">Why I'm running again</span>
+      <h2>I love this city, and I'm not done yet.</h2>
+      <p class="lead-text">
+        PLACEHOLDER — Write a short, warm paragraph (3–5 sentences) from Teri.
+        Touch on: the work still to do on council, what she's heard from neighbours recently,
+        and the values that guide her. Keep it conversational — like she's chatting on a porch.
+      </p>
+      <p><a href="/about/" class="btn btn-outline">More about Teri</a></p>
+    </div>
+  </section>
+
+  <!-- Platform pillars -->
+  <section class="pillars">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Platform</span>
+        <h2>What I'm focused on</h2>
+      </div>
+      <div class="grid grid-3">
+        {pillars.map((p) => (
+          <PillarCard
+            title={p.data.title}
+            summary={p.data.summary}
+            icon={p.data.icon}
+            href={`/platform/#${p.slug}`}
+          />
+        ))}
+      </div>
+      <div class="center"><a href="/platform/" class="btn btn-outline">See the full platform</a></div>
+    </div>
+  </section>
+
+  <!-- News -->
+  {posts.length > 0 && (
+    <section class="news-preview">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">From the campaign</span>
+          <h2>Latest news</h2>
+        </div>
+        <div class="grid grid-3">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              date={post.data.date}
+              excerpt={post.data.excerpt}
+              image={post.data.image}
+              href={`/news/${post.slug}/`}
+            />
+          ))}
+        </div>
+        <div class="center"><a href="/news/" class="btn btn-ghost">All news &amp; events</a></div>
+      </div>
+    </section>
+  )}
+
+  <!-- Endorsements -->
+  {endorsements.length > 0 && (
+    <section class="endorsements-preview">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Neighbours supporting Teri</span>
+          <h2>Endorsements</h2>
+        </div>
+        <div class="grid grid-2">
+          {endorsements.map((e) => (
+            <EndorsementCard
+              name={e.data.name}
+              role={e.data.role}
+              quote={e.data.quote}
+              image={e.data.image}
+            />
+          ))}
+        </div>
+        <div class="center"><a href="/endorsements/" class="btn btn-ghost">See all endorsements</a></div>
+      </div>
+    </section>
+  )}
+
+  <NewsletterSignup />
+
+  <!-- Vote CTA -->
+  <section class="vote-cta">
+    <div class="container-narrow center">
+      <span class="eyebrow">{site.electionDateLabel}</span>
+      <h2>Ready to vote?</h2>
+      <p>Everything you need to know about where, when, and how to vote in Coquitlam.</p>
+      <a href="/how-to-vote/" class="btn btn-primary">How to Vote</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+  }
+  .lead-text { font-size: 1.15rem; color: var(--color-muted); }
+  .section-head { margin-bottom: var(--space-md); }
+  .section-head h2 { margin: 0.25rem 0 0; }
+  .center { text-align: center; margin-top: var(--space-lg); }
+  .pillars { background: color-mix(in srgb, var(--color-primary) 6%, var(--color-cream)); }
+  .vote-cta {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--space-xl) 0;
+    margin-top: 0;
+  }
+  .vote-cta h2, .vote-cta .eyebrow { color: var(--color-white); }
+  .vote-cta .eyebrow { color: #DDEFE0; }
+  .vote-cta p { color: #E8F5EA; font-size: 1.1rem; }
+</style>

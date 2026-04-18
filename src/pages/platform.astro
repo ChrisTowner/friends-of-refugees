@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const pillars = (await getCollection('pillars')).sort((a, b) => a.data.order - b.data.order);
+const withContent = await Promise.all(
+  pillars.map(async (p) => ({ data: p.data, slug: p.slug, Content: (await p.render()).Content }))
+);
+---
+<BaseLayout title="Platform — Teri Towner for Coquitlam Council" description="Teri Towner's platform and priorities for Coquitlam.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">Platform</span>
+      <h1>What I'm focused on</h1>
+      <p class="lead">
+        PLACEHOLDER — A short paragraph framing the platform. What matters most right now?
+        What's Teri hearing from residents? Keep it warm and grounded.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-narrow prose">
+      {withContent.map(({ data, slug, Content }) => (
+        <article id={slug} class="pillar-section">
+          <header>
+            <h2>{data.title}</h2>
+            <p class="summary">{data.summary}</p>
+          </header>
+          <Content />
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container-narrow center">
+      <h2>Something missing? Tell me.</h2>
+      <p>This platform is a living document — I want to hear what matters to you.</p>
+      <a href="/contact/" class="btn btn-primary">Get in touch</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-primary) 10%, var(--color-cream));
+  }
+  .page-header h1 { margin: 0.25rem 0; }
+  .page-header .lead { color: var(--color-muted); font-size: 1.15rem; }
+
+  .pillar-section {
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+    scroll-margin-top: 5rem;
+  }
+  .pillar-section:last-of-type { border-bottom: none; }
+  .pillar-section .summary { color: var(--color-muted); font-size: 1.05rem; font-style: italic; margin-bottom: var(--space-sm); }
+  .cta-band {
+    background: color-mix(in srgb, var(--color-accent) 15%, var(--color-cream));
+    padding: var(--space-xl) 0;
+  }
+  .center { text-align: center; }
+</style>

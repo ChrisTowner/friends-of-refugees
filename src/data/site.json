@@ -1,0 +1,46 @@
+{
+  "candidateName": "Teri Towner",
+  "tagline": "Experienced. Community-rooted. Ready to keep serving Coquitlam.",
+  "subTagline": "Re-elect Teri Towner for Coquitlam City Council — October 17, 2026.",
+  "electionDate": "2026-10-17",
+  "electionDateLabel": "Saturday, October 17, 2026",
+  "email": "hello@teritowner.ca",
+  "phone": "",
+  "mailingAddress": "PLACEHOLDER — Campaign mailing address, Coquitlam, BC",
+  "socials": {
+    "facebook": "https://www.facebook.com/TeriTownerCoquitlam",
+    "instagram": "https://www.instagram.com/teritownercllr/",
+    "cityProfile": "https://www.coquitlam.ca/868/Councillor-Teri-Towner"
+  },
+  "donationLink": "#",
+  "financialAgent": {
+    "name": "PLACEHOLDER — Financial Agent Name",
+    "email": "PLACEHOLDER@example.com",
+    "phone": ""
+  },
+  "authorizationNotice": "Authorized by [Financial Agent Name], Financial Agent for Teri Towner, [phone / email].",
+  "googleFormUrls": {
+    "volunteer": "PLACEHOLDER_GOOGLE_FORM_EMBED_URL",
+    "lawnSign": "PLACEHOLDER_GOOGLE_FORM_EMBED_URL",
+    "contact": "PLACEHOLDER_GOOGLE_FORM_EMBED_URL",
+    "newsletter": "PLACEHOLDER_GOOGLE_FORM_EMBED_URL"
+  },
+  "googleAnalyticsId": "G-PLACEHOLDER",
+  "colors": {
+    "primary": "#2E7D32",
+    "primaryDark": "#1B5E20",
+    "accent": "#7C9CC9",
+    "accentDark": "#4A6FA5",
+    "cream": "#FAF7F2",
+    "text": "#1F2937",
+    "muted": "#5B6472"
+  },
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "About Teri", "href": "/about/" },
+    { "label": "Platform", "href": "/platform/" },
+    { "label": "News & Events", "href": "/news/" },
+    { "label": "Endorsements", "href": "/endorsements/" },
+    { "label": "Get Involved", "href": "/get-involved/" }
+  ]
+}

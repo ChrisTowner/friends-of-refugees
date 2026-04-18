@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+<BaseLayout title="Privacy — Teri Towner" description="How the Teri Towner campaign collects and uses your information.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <h1>Privacy</h1>
+    </div>
+  </section>
+  <section>
+    <div class="container-narrow prose">
+      <p><em>Last updated: PLACEHOLDER</em></p>
+
+      <p>The Teri Towner campaign respects your privacy. This page explains what we collect and why.</p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Form submissions</strong> (volunteer, lawn sign, contact, newsletter): name, email, address, phone, and anything you choose to share. Stored in Google Forms / Google Sheets accessible only to campaign staff.</li>
+        <li><strong>Donation records</strong>: name, address, and amount — as required by the BC <em>Local Elections Campaign Financing Act</em>. These are reported to Elections BC.</li>
+        <li><strong>Website analytics</strong>: anonymized visitor data (pages viewed, approximate location, device type) via Google Analytics. No personally identifying data is collected.</li>
+      </ul>
+
+      <h2>How we use it</h2>
+      <p>Only for the campaign — to respond to you, coordinate volunteer efforts, deliver lawn signs, and send occasional updates if you've subscribed. We do not sell, trade, or share your information with any third parties.</p>
+
+      <h2>Your rights</h2>
+      <p>You can request access to, correction of, or deletion of your personal information at any time by emailing {site.email || 'the campaign'}.</p>
+
+      <h2>Cookies</h2>
+      <p>We use Google Analytics cookies for anonymous traffic analysis. You can disable cookies in your browser at any time.</p>
+
+      <h2>Contact</h2>
+      <p>Questions? <a href="/contact/">Contact the campaign</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: var(--color-cream);
+  }
+</style>

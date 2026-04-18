@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormEmbed from '../components/FormEmbed.astro';
+import site from '../data/site.json';
+const hasDonationLink = site.donationLink && site.donationLink !== '#';
+---
+<BaseLayout title="Get Involved — Teri Towner" description="Donate, volunteer, or request a lawn sign to support Teri Towner's 2026 campaign.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">Get Involved</span>
+      <h1>Three easy ways to help</h1>
+      <p class="lead">
+        Every campaign runs on neighbours. Whether you have five minutes or five weekends, there's a place for you.
+      </p>
+      <div class="jump">
+        <a href="#donate" class="btn btn-primary btn-sm">Donate</a>
+        <a href="#volunteer" class="btn btn-accent btn-sm">Volunteer</a>
+        <a href="#lawn-sign" class="btn btn-outline btn-sm">Request a Lawn Sign</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section id="donate" class="section-block">
+    <div class="container-narrow">
+      <h2>Donate</h2>
+      <p>
+        Small contributions from many neighbours are how local campaigns get built.
+        Every donation — $10, $50, $100 — helps cover signs, printing, and reaching residents across Coquitlam.
+      </p>
+
+      {hasDonationLink ? (
+        <p><a href={site.donationLink} class="btn btn-primary" rel="noopener" target="_blank">Donate online →</a></p>
+      ) : (
+        <div class="placeholder-box">
+          <p><strong>Donation link placeholder.</strong></p>
+          <p class="small">
+            Once you have the donation link (e.g. CanadaHelps, a payment processor, or e-transfer details),
+            paste it into <code>src/data/site.json</code> → <code>donationLink</code> and this button will appear.
+          </p>
+        </div>
+      )}
+
+      <div class="legal-notice card">
+        <h3>Canadian municipal campaign contribution rules (BC)</h3>
+        <p>
+          Under the BC <em>Local Elections Campaign Financing Act</em>, only eligible individual donors
+          may contribute to a local campaign. Key rules:
+        </p>
+        <ul>
+          <li>You must be a <strong>Canadian citizen or permanent resident</strong> and a <strong>resident of BC</strong>.</li>
+          <li>Annual contribution limit: <strong>approximately $1,400 per candidate</strong> (the exact amount is adjusted each year by Elections BC — please confirm the current limit before donating).</li>
+          <li>Corporations, unions, and out-of-province donors <strong>cannot contribute</strong>.</li>
+          <li>Cash donations are limited to <strong>$100 or less</strong>.</li>
+          <li>Anonymous donations over <strong>$50</strong> cannot be accepted.</li>
+          <li>Your <strong>full name and residential address</strong> are required for every contribution.</li>
+          <li>Municipal campaign donations are <strong>not tax-deductible</strong>.</li>
+        </ul>
+        <p class="small">
+          Verify current limits and rules at <a href="https://elections.bc.ca/" rel="noopener" target="_blank">elections.bc.ca</a>.
+          Questions? Contact our financial agent: <strong>{site.financialAgent.name}</strong>
+          {site.financialAgent.email && <> — <a href={`mailto:${site.financialAgent.email}`}>{site.financialAgent.email}</a></>}.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOLUNTEER -->
+  <section id="volunteer" class="section-block alt-bg">
+    <div class="container-narrow">
+      <h2>Volunteer</h2>
+      <p>
+        Come knock on doors, drop off literature, staff an event, or help from home.
+        Tell us what you're interested in and we'll find the right fit.
+      </p>
+      <FormEmbed
+        url={site.googleFormUrls.volunteer}
+        title="Volunteer signup form"
+        height={1100}
+        setupHint="Create a Google Form titled 'Volunteer Signup' (with fields: name, email, phone, postal code, what you'd like to help with). Click Send → Embed (< >) → copy the src URL → paste into src/data/site.json → googleFormUrls.volunteer. See SETUP.md."
+      />
+    </div>
+  </section>
+
+  <!-- LAWN SIGN -->
+  <section id="lawn-sign" class="section-block">
+    <div class="container-narrow">
+      <h2>Request a Lawn Sign</h2>
+      <p>
+        Signs typically go up about a month before election day. Let us know your address and we'll bring one by.
+      </p>
+      <FormEmbed
+        url={site.googleFormUrls.lawnSign}
+        title="Lawn sign request form"
+        height={1000}
+        setupHint="Create a Google Form titled 'Lawn Sign Request' (with fields: name, address, email, phone, any delivery notes). Click Send → Embed (< >) → copy the src URL → paste into src/data/site.json → googleFormUrls.lawnSign."
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-cream));
+  }
+  .page-header h1 { margin: 0.25rem 0; }
+  .page-header .lead { color: var(--color-muted); font-size: 1.15rem; max-width: 55ch; }
+  .jump { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-md); }
+  .btn-sm { padding: 0.55rem 1.1rem; font-size: 0.95rem; min-height: 40px; }
+
+  .section-block {
+    padding: var(--space-xl) 0;
+    scroll-margin-top: 5rem;
+  }
+  .section-block.alt-bg { background: color-mix(in srgb, var(--color-primary) 6%, var(--color-cream)); }
+  .section-block h2 { margin-top: 0; }
+
+  .legal-notice {
+    margin-top: var(--space-md);
+    background: var(--color-white);
+  }
+  .legal-notice h3 { margin-top: 0; }
+  .legal-notice ul { padding-left: 1.25rem; }
+  .legal-notice li { margin-bottom: 0.35rem; }
+  .legal-notice .small { font-size: 0.88rem; color: var(--color-muted); margin-top: 1rem; margin-bottom: 0; }
+
+  .placeholder-box {
+    background: var(--color-white);
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border: 1.5px dashed var(--color-accent-dark);
+    margin: 1rem 0;
+  }
+  .placeholder-box .small { font-size: 0.88rem; color: var(--color-muted); }
+</style>

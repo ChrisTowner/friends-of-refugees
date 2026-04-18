@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EndorsementCard from '../components/EndorsementCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('endorsements')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Endorsements — Teri Towner" description="Neighbours, community leaders, and organizations who support Teri Towner for Coquitlam Council.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">Endorsements</span>
+      <h1>Neighbours supporting Teri</h1>
+      <p class="lead">
+        These are the voices of people across Coquitlam — community volunteers, small business owners,
+        former colleagues, and neighbours — who believe in the work we're doing together.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      {all.length === 0 ? (
+        <p class="muted">Endorsements coming soon.</p>
+      ) : (
+        <div class="grid grid-2">
+          {all.map((e) => (
+            <EndorsementCard
+              name={e.data.name}
+              role={e.data.role}
+              quote={e.data.quote}
+              image={e.data.image}
+            />
+          ))}
+        </div>
+      )}
+
+      <div class="endorse-cta card">
+        <h3>Want to add your endorsement?</h3>
+        <p>We'd love to hear why you're supporting Teri. Send a quote and your name and neighbourhood.</p>
+        <a href="/contact/" class="btn btn-outline">Send an endorsement</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-cream));
+  }
+  .page-header h1 { margin: 0.25rem 0; }
+  .page-header .lead { color: var(--color-muted); font-size: 1.15rem; }
+  .endorse-cta {
+    margin-top: var(--space-lg);
+    text-align: center;
+    padding: var(--space-md) var(--space-md);
+  }
+  .endorse-cta h3 { margin-top: 0; }
+  .muted { color: var(--color-muted); }
+</style>

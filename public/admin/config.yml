@@ -1,0 +1,157 @@
+# Decap CMS configuration — controls what editors can change.
+# Editors log in at /admin with their Netlify Identity email/password.
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Auto-upload images go here
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://teritowner.ca
+display_url: https://teritowner.ca
+logo_url: /favicon.svg
+
+# Show an "edit preview" link after publishing
+publish_mode: simple
+
+collections:
+  # ---------- Site settings (colors, nav, social links, contact info) ----------
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "site"
+        label: "Site settings"
+        file: "src/data/site.json"
+        format: "json"
+        fields:
+          - { name: candidateName, label: "Candidate name", widget: string }
+          - { name: tagline, label: "Homepage tagline", widget: string }
+          - { name: subTagline, label: "Homepage sub-tagline", widget: string }
+          - { name: electionDate, label: "Election date (YYYY-MM-DD)", widget: string }
+          - { name: electionDateLabel, label: "Election date label (human)", widget: string }
+          - { name: email, label: "Public email", widget: string, required: false }
+          - { name: phone, label: "Public phone", widget: string, required: false }
+          - { name: mailingAddress, label: "Mailing address", widget: text, required: false }
+          - label: "Social links"
+            name: "socials"
+            widget: object
+            fields:
+              - { name: facebook, label: "Facebook URL", widget: string, required: false }
+              - { name: instagram, label: "Instagram URL", widget: string, required: false }
+              - { name: cityProfile, label: "City of Coquitlam profile URL", widget: string, required: false }
+          - { name: donationLink, label: "Donation link (URL)", widget: string, required: false }
+          - label: "Financial agent"
+            name: "financialAgent"
+            widget: object
+            fields:
+              - { name: name, label: "Financial agent name", widget: string }
+              - { name: email, label: "Financial agent email", widget: string, required: false }
+              - { name: phone, label: "Financial agent phone", widget: string, required: false }
+          - { name: authorizationNotice, label: "Legal authorization notice (appears in footer)", widget: text }
+          - label: "Google Form embed URLs"
+            name: "googleFormUrls"
+            widget: object
+            fields:
+              - { name: volunteer, label: "Volunteer form URL", widget: string, required: false }
+              - { name: lawnSign, label: "Lawn sign form URL", widget: string, required: false }
+              - { name: contact, label: "Contact form URL", widget: string, required: false }
+              - { name: newsletter, label: "Newsletter form URL", widget: string, required: false }
+          - { name: googleAnalyticsId, label: "Google Analytics Measurement ID (G-XXXXXXXXXX)", widget: string, required: false }
+          - label: "Colors"
+            name: "colors"
+            widget: object
+            fields:
+              - { name: primary, label: "Primary (green)", widget: string }
+              - { name: primaryDark, label: "Primary dark", widget: string }
+              - { name: accent, label: "Accent (blue)", widget: string }
+              - { name: accentDark, label: "Accent dark", widget: string }
+              - { name: cream, label: "Background cream", widget: string }
+              - { name: text, label: "Text color", widget: string }
+              - { name: muted, label: "Muted text", widget: string }
+          - label: "Navigation"
+            name: "nav"
+            widget: list
+            fields:
+              - { name: label, label: "Label", widget: string }
+              - { name: href, label: "Link", widget: string }
+
+  # ---------- News posts ----------
+  - name: "posts"
+    label: "News Posts"
+    label_singular: "Post"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Excerpt (1–2 sentences)", name: "excerpt", widget: "string", required: false }
+      - { label: "Header image", name: "image", widget: "image", required: false }
+      - { label: "Draft (hide from site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # ---------- Events ----------
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    folder: "src/content/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Start date/time", name: "date", widget: "datetime" }
+      - { label: "End date/time", name: "endDate", widget: "datetime", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Event link (optional)", name: "link", widget: "string", required: false }
+      - { label: "Draft (hide from site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Description", name: "body", widget: "markdown" }
+
+  # ---------- Endorsements ----------
+  - name: "endorsements"
+    label: "Endorsements"
+    label_singular: "Endorsement"
+    folder: "src/content/endorsements"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / neighbourhood", name: "role", widget: "string", required: false }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Order (lower = shown first)", name: "order", widget: "number", default: 100 }
+      - { label: "Photo", name: "image", widget: "image", required: false }
+      - { label: "Body (unused — leave blank)", name: "body", widget: "markdown", required: false }
+
+  # ---------- Press ----------
+  - name: "press"
+    label: "Press & Media"
+    label_singular: "Article"
+    folder: "src/content/press"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Article title", name: "title", widget: "string" }
+      - { label: "Publication", name: "publication", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Link to article", name: "link", widget: "string", required: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+      - { label: "Body (unused — leave blank)", name: "body", widget: "markdown", required: false }
+
+  # ---------- Platform pillars ----------
+  - name: "pillars"
+    label: "Platform Pillars"
+    label_singular: "Pillar"
+    folder: "src/content/pillars"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        options: ["leaf", "people", "home", "bus", "heart", "tree"]
+        default: "leaf"
+      - { label: "Short summary (1 sentence)", name: "summary", widget: "string" }
+      - { label: "Order (lower = shown first)", name: "order", widget: "number", default: 100 }
+      - { label: "Detail", name: "body", widget: "markdown" }

@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const now = new Date();
+const events = (await getCollection('events', ({ data }) => !data.draft))
+  .filter((e) => (e.data.endDate ?? e.data.date).valueOf() >= now.valueOf())
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+const eventsWithBody = await Promise.all(
+  events.map(async (e) => {
+    const { Content } = await e.render();
+    return { ...e, Content };
+  })
+);
+---
+<BaseLayout title="News & Events — Teri Towner" description="Campaign news, community events, and updates from Teri Towner.">
+  <section class="page-header">
+    <div class="container-narrow">
+      <span class="eyebrow">News &amp; Events</span>
+      <h1>What's happening</h1>
+      <p class="lead">Updates from the campaign and upcoming events in the community.</p>
+    </div>
+  </section>
+
+  <!-- Upcoming events -->
+  <section>
+    <div class="container">
+      <h2>Upcoming events</h2>
+      {events.length === 0 ? (
+        <p class="muted">No upcoming events scheduled. Check back soon!</p>
+      ) : (
+        <div class="events-list">
+          {eventsWithBody.map((e) => (
+            <EventCard
+              title={e.data.title}
+              date={e.data.date}
+              endDate={e.data.endDate}
+              location={e.data.location}
+              link={e.data.link}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- News posts -->
+  <section class="news-grid-section">
+    <div class="container">
+      <h2>Recent news</h2>
+      {posts.length === 0 ? (
+        <p class="muted">No posts yet.</p>
+      ) : (
+        <div class="grid grid-3">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              date={post.data.date}
+              excerpt={post.data.excerpt}
+              image={post.data.image}
+              href={`/news/${post.slug}/`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-md);
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-cream));
+  }
+  .page-header h1 { margin: 0.25rem 0; }
+  .page-header .lead { color: var(--color-muted); font-size: 1.15rem; }
+  .events-list { display: flex; flex-direction: column; gap: 1rem; }
+  .muted { color: var(--color-muted); }
+  .news-grid-section { padding-top: 0; }
+</style>
