@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormEmbed from '../components/FormEmbed.astro';
+import DonateSection from '../components/DonateSection.astro';
 import site from '../data/site.json';
-const hasDonationLink = site.donationLink && site.donationLink !== '#';
 ---
 <BaseLayout title="Get Involved — Teri Towner" description="Donate, volunteer, or request a lawn sign to support Teri Towner's 2026 campaign.">
   <section class="page-header">
@@ -21,26 +21,10 @@ const hasDonationLink = site.donationLink && site.donationLink !== '#';
   </section>
 
   <!-- DONATE -->
-  <section id="donate" class="section-block">
+  <div id="donate"><DonateSection variant="light" heading="Donate" /></div>
+
+  <section class="section-block">
     <div class="container-narrow">
-      <h2>Donate</h2>
-      <p>
-        Small contributions from many neighbours are how local campaigns get built.
-        Every donation — $10, $50, $100 — helps cover signs, printing, and reaching residents across Coquitlam.
-      </p>
-
-      {hasDonationLink ? (
-        <p><a href={site.donationLink} class="btn btn-primary" rel="noopener" target="_blank">Donate online →</a></p>
-      ) : (
-        <div class="placeholder-box">
-          <p><strong>Donation link placeholder.</strong></p>
-          <p class="small">
-            Once you have the donation link (e.g. CanadaHelps, a payment processor, or e-transfer details),
-            paste it into <code>src/data/site.json</code> → <code>donationLink</code> and this button will appear.
-          </p>
-        </div>
-      )}
-
       <div class="legal-notice card">
         <h3>Canadian municipal campaign contribution rules (BC)</h3>
         <p>

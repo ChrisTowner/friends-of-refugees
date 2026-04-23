@@ -1,0 +1,164 @@
+---
+import site from '../data/site.json';
+interface Props {
+  heading?: string;
+  intro?: string;
+  variant?: 'light' | 'dark';
+}
+const {
+  heading = "Power the campaign",
+  intro = "Small contributions from many neighbours are how local campaigns get built. Every dollar goes toward signs, literature, and reaching residents across Coquitlam.",
+  variant = 'light',
+} = Astro.props;
+
+const base = site.donationLink && site.donationLink !== '#' ? site.donationLink : '';
+const hasLink = !!base;
+const amounts = site.donationImpact ?? [];
+const joinParam = (url: string, param: string) => url.includes('?') ? `${url}&${param}` : `${url}?${param}`;
+---
+<section class={`donate-section ${variant}`} aria-labelledby="donate-heading">
+  <div class="container">
+    <div class="donate-grid">
+      <div class="donate-intro">
+        <span class="eyebrow">Donate</span>
+        <h2 id="donate-heading">{heading}</h2>
+        <p>{intro}</p>
+        <p class="small-note">
+          Municipal donations in BC are <strong>not tax-deductible</strong>. Contribution limit is approximately $1,400/year per candidate.
+          <a href="/get-involved/#donate">See full rules →</a>
+        </p>
+      </div>
+
+      <div class="donate-amounts">
+        <p class="chip-label">Give today</p>
+        <div class="amount-grid">
+          {amounts.map((a) => (
+            <a
+              href={hasLink ? joinParam(base, `amount=${a.amount}`) : '#donate-placeholder'}
+              class="amount-chip"
+              rel={hasLink ? 'noopener' : undefined}
+              target={hasLink ? '_blank' : undefined}
+              aria-label={`Donate $${a.amount}`}
+            >
+              <span class="amt">${a.amount}</span>
+            </a>
+          ))}
+          <a
+            href={hasLink ? base : '#donate-placeholder'}
+            class="amount-chip amount-chip-other"
+            rel={hasLink ? 'noopener' : undefined}
+            target={hasLink ? '_blank' : undefined}
+            aria-label="Donate a custom amount"
+          >
+            <span class="amt">Other</span>
+          </a>
+        </div>
+
+        {!hasLink && (
+          <p id="donate-placeholder" class="placeholder-note">
+            <strong>Donation link coming soon.</strong> Once added in site settings, these buttons will link directly to the donation page.
+          </p>
+        )}
+
+        {hasLink && (
+          <p class="donate-cta-row">
+            <a href={base} class="btn btn-primary" rel="noopener" target="_blank">Donate now →</a>
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .donate-section {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .donate-section.light {
+    background: color-mix(in srgb, var(--color-primary) 8%, var(--color-cream));
+  }
+  .donate-section.dark {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+  .donate-section.dark h2,
+  .donate-section.dark .eyebrow { color: var(--color-white); }
+  .donate-section.dark .eyebrow { color: #DDEFE0; }
+  .donate-section.dark .small-note { color: #D8E9DA; }
+  .donate-section.dark .small-note a { color: var(--color-white); }
+
+  .donate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .donate-intro h2 { margin: 0.25rem 0 0.75rem; }
+  .donate-intro p { font-size: 1.05rem; }
+  .small-note { font-size: 0.88rem; color: var(--color-muted); margin-top: 0.5rem; }
+
+  .chip-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+  .donate-section.dark .chip-label { color: var(--color-white); }
+
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .amount-chip {
+    background: var(--color-white);
+    border: 2px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1rem 0.85rem;
+    text-decoration: none;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 180ms var(--ease);
+    min-height: 64px;
+  }
+  .amount-chip:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text);
+  }
+  .amount-chip .amt {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    line-height: 1;
+  }
+  .amount-chip .impact {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+  .amount-chip-other .amt { color: var(--color-accent-dark); }
+
+  .donate-cta-row { margin-top: 1rem; }
+  .placeholder-note {
+    background: var(--color-white);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1.5px dashed var(--color-accent-dark);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 880px) {
+    .donate-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .amount-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .amount-grid { grid-template-columns: 1fr; }
+  }
+</style>

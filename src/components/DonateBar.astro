@@ -1,0 +1,76 @@
+---
+import site from '../data/site.json';
+const promo = site.donationPromo;
+if (!promo?.enabled) return;
+const href = site.donationLink && site.donationLink !== '#' ? site.donationLink : '/get-involved/#donate';
+---
+<div class="donate-bar" role="region" aria-label="Campaign donation">
+  <div class="container donate-bar-inner">
+    <span class="donate-bar-msg">
+      <strong>{promo.message}</strong>
+    </span>
+    <a href={href} class="donate-bar-cta">{promo.ctaLabel} →</a>
+    <button type="button" class="donate-bar-close" aria-label="Dismiss donation message">×</button>
+  </div>
+</div>
+
+<style>
+  .donate-bar {
+    background: var(--color-primary-dark);
+    color: var(--color-white);
+    font-size: 0.92rem;
+  }
+  .donate-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.55rem var(--space-md);
+    flex-wrap: wrap;
+  }
+  .donate-bar-msg { color: #EDEAE2; }
+  .donate-bar-msg strong { color: var(--color-white); }
+  .donate-bar-cta {
+    background: var(--color-white);
+    color: var(--color-primary-dark);
+    padding: 0.25rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+  .donate-bar-cta:hover { background: #FFF8E7; color: var(--color-primary-dark); }
+  .donate-bar-close {
+    background: transparent;
+    color: #EDEAE2;
+    border: none;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.35rem;
+    min-height: 32px;
+    min-width: 32px;
+    border-radius: 6px;
+  }
+  .donate-bar-close:hover { color: var(--color-white); background: rgba(255,255,255,0.1); }
+  .donate-bar.hidden { display: none; }
+  @media (max-width: 560px) {
+    .donate-bar-inner { gap: 0.5rem; padding: 0.5rem 0.75rem; }
+    .donate-bar-msg { font-size: 0.85rem; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const bar = document.querySelector('.donate-bar');
+    if (!bar) return;
+    if (sessionStorage.getItem('donateBarDismissed') === '1') {
+      bar.classList.add('hidden');
+    }
+    const close = bar.querySelector('.donate-bar-close');
+    close?.addEventListener('click', () => {
+      bar.classList.add('hidden');
+      sessionStorage.setItem('donateBarDismissed', '1');
+    });
+  })();
+</script>

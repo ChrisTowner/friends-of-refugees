@@ -13,6 +13,18 @@
     "cityProfile": "https://www.coquitlam.ca/868/Councillor-Teri-Towner"
   },
   "donationLink": "#",
+  "donationPromo": {
+    "enabled": true,
+    "message": "Grassroots campaigns run on neighbours like you.",
+    "ctaLabel": "Chip in"
+  },
+  "donationImpact": [
+    { "amount": 25, "description": "Covers lawn signs for one block." },
+    { "amount": 50, "description": "Prints literature for 200 neighbours." },
+    { "amount": 100, "description": "Reaches a full neighbourhood with a door hanger." },
+    { "amount": 250, "description": "Sends a mailer to 500 households." },
+    { "amount": 500, "description": "Funds a community coffee event." }
+  ],
   "financialAgent": {
     "name": "PLACEHOLDER — Financial Agent Name",
     "email": "PLACEHOLDER@example.com",

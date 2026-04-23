@@ -5,6 +5,7 @@ import PillarCard from '../components/PillarCard.astro';
 import PostCard from '../components/PostCard.astro';
 import EndorsementCard from '../components/EndorsementCard.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+import DonateSection from '../components/DonateSection.astro';
 import site from '../data/site.json';
 import { getCollection } from 'astro:content';
 
@@ -53,6 +54,9 @@ const endorsements = (await getCollection('endorsements'))
       <div class="center"><a href="/platform/" class="btn btn-outline">See the full platform</a></div>
     </div>
   </section>
+
+  <!-- Donate: prominently placed right after platform -->
+  <DonateSection variant="light" />
 
   <!-- News -->
   {posts.length > 0 && (
@@ -103,13 +107,16 @@ const endorsements = (await getCollection('endorsements'))
 
   <NewsletterSignup />
 
-  <!-- Vote CTA -->
+  <!-- Vote + final donate CTA -->
   <section class="vote-cta">
     <div class="container-narrow center">
       <span class="eyebrow">{site.electionDateLabel}</span>
-      <h2>Ready to vote?</h2>
-      <p>Everything you need to know about where, when, and how to vote in Coquitlam.</p>
-      <a href="/how-to-vote/" class="btn btn-primary">How to Vote</a>
+      <h2>Every voice, every dollar.</h2>
+      <p>Pitch in, then plan your vote — both matter in a municipal election.</p>
+      <div class="vote-cta-buttons">
+        <a href="/get-involved/#donate" class="btn btn-white">Donate</a>
+        <a href="/how-to-vote/" class="btn btn-outline-white">How to Vote</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -133,4 +140,16 @@ const endorsements = (await getCollection('endorsements'))
   .vote-cta h2, .vote-cta .eyebrow { color: var(--color-white); }
   .vote-cta .eyebrow { color: #DDEFE0; }
   .vote-cta p { color: #E8F5EA; font-size: 1.1rem; }
+  .vote-cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: var(--space-sm); }
+  .btn-white {
+    background: var(--color-white);
+    color: var(--color-primary-dark);
+  }
+  .btn-white:hover { background: #FFF8E7; color: var(--color-primary-dark); }
+  .btn-outline-white {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+  }
+  .btn-outline-white:hover { background: var(--color-white); color: var(--color-primary-dark); }
 </style>
